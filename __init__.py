@@ -64,7 +64,7 @@ class HomeyWebhookSkill(OVOSSkill):
         url = f"https://webhook.homey.app/65d346bd8b9cb2e8ec0d2f77/Terre?tag=Light"
         data = requests.get(url)
         print(data.json())
-        self.speak_dialog("PlayLight")
+        self.speak_dialog("LightOnOff", wait=True)
 
     @intent_handler("CurtainClose.intent")
     def handle_curtain_close(self, message):
