@@ -55,31 +55,29 @@ class HomeyWebhookSkill(OVOSSkill):
 
     @intent_handler(IntentBuilder("SkyRadioOnOff.intent").require("KeyWordSkyRadio.voc"))
     def handle_sky_radio_intent(self, message):
-        LOG.info("SkyRadio Adapt intent is triggered with a KeyWord")
+        self.log.info("SkyRadio Adapt intent is triggered with a KeyWord")
         # wait=True will block the message bus until the dialog is finished
         self.speak("this is a dummy, there is no webhook in script", wait=True)
 
-    @intent_handler("LightOnOff.intent")
+    @intent_handler(IntentBuilder("LightOnOff.intent"))
     def LightOnOff(self):
         url = f"https://webhook.homey.app/65d346bd8b9cb2e8ec0d2f77/Terre?tag=Light"
         data = requests.get(url)
-        print(data.json())
+        self.log.info(f"HOMEY initiated the URL response in json {data.json()}")
         self.speak_dialog("LightOnOff", wait=True)
 
-    @intent_handler("CurtainClose.intent")
+    @intent_handler(IntentBuilder("CurtainClose.intent"))
     def handle_curtain_close(self, message):
-        LOG.info("Close curtain is triggered by an intent")
+        self.log.info("Close curtain is triggered by an intent")
         url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=CurtainClose"
         data = requests.get(url)
-        print(data.json())
         self.speak_dialog("CurtainClosed", wait=True)
 
-    @intent_handler("CurtainOpen.intent")
+    @intent_handler(IntentBuilder("CurtainOpen.intent"))
     def handle_curtain_open(self, message):
-        LOG.info("Open curtain is stopped by an intent")
+        self.log.info("Open curtain is stopped by an intent")
         url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=CurtainOpen"
         data = requests.get(url)
-        print(data.json())
         self.speak_dialog("CurtainOpened", wait=True)
 
 def create_skill():
