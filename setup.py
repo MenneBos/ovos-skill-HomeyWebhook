@@ -5,9 +5,9 @@ from os import walk, path
 from os.path import join, dirname
 # from setuptools import setup, find_packages
 
-URL = "https://github.com/MenneBos/skill-ovos-curtain"
-SKILL_CLAZZ = "CurtainSkill"  # needs to match __init__.py class name
-PYPI_NAME = "ovos-skill-curtain"  # pip install PYPI_NAME
+URL = "https://github.com/MenneBos/ovos-skill-HomeyWebhook"
+SKILL_CLAZZ = "HomeyWebhookSkill"  # needs to match __init__.py class name
+PYPI_NAME = "ovos-skill-HomeyWebhook"  # pip install PYPI_NAME
 
 # below derived from github url to ensure standard skill_id
 SKILL_AUTHOR, SKILL_NAME = URL.split(".com/")[-1].split("/")
@@ -73,7 +73,7 @@ setup(
     long_description=long_description,
     url=URL,
     author=SKILL_AUTHOR,
-    description='A skill to open and close the curtain',
+    description='A skill to start flows in Homey using webhooks',
     author_email='your.email@example.com',
     license='Apache-2.0',
     package_dir={SKILL_PKG: ""},

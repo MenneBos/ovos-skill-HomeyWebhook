@@ -1,3 +1,5 @@
+config.json
+*.sh
 *.pyc
 *.qmlc
 settings.json
