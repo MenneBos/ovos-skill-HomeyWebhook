@@ -4,6 +4,7 @@ from ovos_workshop.intents import IntentBuilder
 from ovos_utils.process_utils import RuntimeRequirements
 from ovos_workshop.decorators import intent_handler
 from ovos_workshop.skills import OVOSSkill
+from ovos_bus_client.message import Message
 import requests
 
 DEFAULT_SETTINGS = {
@@ -54,20 +55,20 @@ class HomeyWebhookSkill(OVOSSkill):
         return self.settings.get("log_level", "INFO")
 
     @intent_handler(IntentBuilder("SkyRadioOnOff.intent").require("KeyWordSkyRadio.voc"))
-    def handle_sky_radio_intent(self, message):
+    def handle_sky_radio_intent(self, message: Message):
         self.log.info("SkyRadio Adapt intent is triggered with a KeyWord")
         # wait=True will block the message bus until the dialog is finished
         self.speak("this is a dummy, there is no webhook in script", wait=True)
 
-    @intent_handler(IntentBuilder("LightOnOff.intent"))
-    def LightOnOff(self):
+    @intent_handler(IntentBuilder('LightOnOff.intent').optionally('KeyWordLight.voc'))
+    def LightOnOff(self, message: Message):
         url = f"https://webhook.homey.app/65d346bd8b9cb2e8ec0d2f77/Terre?tag=Light"
         data = requests.get(url)
-        self.log.info(f"HOMEY initiated the URL response in json {data.json()}")
+        self.log.info(f"HOMEY initiated based intent {message} the URL response in json {data.json()}")
         self.speak_dialog("LightOnOff", wait=True)
 
     @intent_handler(IntentBuilder("CurtainClose.intent"))
-    def handle_curtain_close(self, message):
+    def handle_curtain_close(self, message: Message):
         self.log.info("Close curtain is triggered by an intent")
         url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=CurtainClose"
         data = requests.get(url)
